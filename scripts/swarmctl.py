@@ -9,6 +9,10 @@ Creates:
   - docs/tasks/<timestamp>-tasks.md
 
 No external dependencies; stdlib only.
+
+Note:
+  Generated docs/requests/*-request.md and docs/tasks/*-tasks.md are ignored by git by default.
+  If you want to keep them, copy them elsewhere or commit explicitly.
 """
 
 from __future__ import annotations
