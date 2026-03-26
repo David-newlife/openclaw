@@ -19,6 +19,7 @@
   - `prompts/`：给执行层（Claude Code）的提示词
 - `docs/`：操作手册与排障
 
+- `scripts/`：本地工具脚本（swarmctl 等）
 ## 使用方式（MVP）
 
 1. 在 Issues（或需求文档）中写下需求
@@ -30,3 +31,19 @@
 
 - 推荐：GitHub PAT（repo 权限）或 SSH key
 - 配好后可实现：自动 push 分支、自动开 PR。
+
+## swarmctl（试运行工具）
+
+生成“需求落盘 + 微任务清单”的最小工具，用于验证 Elvis 风格的工单化节拍。
+
+```bash
+# 生成 request + tasks
+./scripts/swarmctl.py new "Add swarmctl MVP generator"
+
+# 查看最近生成的文件
+ls -1 docs/requests | tail
+ls -1 docs/tasks | tail
+
+# 运行最小 smoke test
+./scripts/test_swarmctl.sh
+```
