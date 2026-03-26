@@ -40,6 +40,9 @@
 # 生成 request + tasks
 ./scripts/swarmctl.py new "Add swarmctl MVP generator"
 
+# 生成 request + tasks，并额外写入可提交的审计副本（docs/audit）
+./scripts/swarmctl.py new "Add swarmctl MVP generator" --track
+
 # 查看最近生成的文件
 ls -1 docs/requests | tail
 ls -1 docs/tasks | tail
