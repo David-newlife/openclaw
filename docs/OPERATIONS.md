@@ -2,6 +2,15 @@
 
 ## Day-to-day (Elvis style)
 
+### requests/tasks 约定
+
+- `docs/requests/YYYYMMDD-HHMMSS-request.md`：原始需求落盘
+- `docs/tasks/YYYYMMDD-HHMMSS-tasks.md`：对应微任务清单（3~7 个）
+
+通过 `scripts/swarmctl.py new "<requirement>"` 生成
+
+
+
 1. Capture requirement (Issue / message)
 2. Zoe writes a task breakdown (micro-tasks, each 10~30min)
 3. Zoe spawns executors (Claude Code) in parallel

@@ -9,3 +9,7 @@ dist/
 build/
 .coverage
 .pytest_cache/
+
+# swarmctl generated artifacts (default ignore)
+docs/requests/*-request.md
+docs/tasks/*-tasks.md
