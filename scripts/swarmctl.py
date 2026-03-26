@@ -25,6 +25,8 @@ import textwrap
 REPO_ROOT = Path(__file__).resolve().parents[1]
 REQUESTS_DIR = REPO_ROOT / "docs" / "requests"
 TASKS_DIR = REPO_ROOT / "docs" / "tasks"
+AUDIT_REQUESTS_DIR = REPO_ROOT / "docs" / "audit" / "requests"
+AUDIT_TASKS_DIR = REPO_ROOT / "docs" / "audit" / "tasks"
 TASK_TEMPLATE_PATH = REPO_ROOT / "orchestrator" / "TASK_TEMPLATE.md"
 
 
@@ -90,6 +92,10 @@ def cmd_new(args: argparse.Namespace) -> int:
     REQUESTS_DIR.mkdir(parents=True, exist_ok=True)
     TASKS_DIR.mkdir(parents=True, exist_ok=True)
 
+    if args.track:
+        AUDIT_REQUESTS_DIR.mkdir(parents=True, exist_ok=True)
+        AUDIT_TASKS_DIR.mkdir(parents=True, exist_ok=True)
+
     req_path = REQUESTS_DIR / f"{ts}-request.md"
     tasks_path = TASKS_DIR / f"{ts}-tasks.md"
 
@@ -132,7 +138,16 @@ def cmd_new(args: argparse.Namespace) -> int:
     req_path.write_text(req_doc, encoding="utf-8")
     tasks_path.write_text(tasks_doc, encoding="utf-8")
 
-    print(f"Created:\n- {req_path}\n- {tasks_path}")
+    created_lines = [f"Created:\n- {req_path}\n- {tasks_path}"]
+
+    if args.track:
+        audit_req_path = AUDIT_REQUESTS_DIR / req_path.name
+        audit_tasks_path = AUDIT_TASKS_DIR / tasks_path.name
+        audit_req_path.write_text(req_doc, encoding="utf-8")
+        audit_tasks_path.write_text(tasks_doc, encoding="utf-8")
+        created_lines.append(f"Audit (git-tracked):\n- {audit_req_path}\n- {audit_tasks_path}")
+
+    print("\n".join(created_lines))
     return 0
 
 
@@ -142,6 +157,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     p_new = sub.add_parser("new", help="Create a request + micro-task list")
     p_new.add_argument("requirement", help="Requirement text (quote it)")
+    p_new.add_argument("--track", action="store_true", help="Also write a copy into docs/audit (git-tracked)")
     p_new.set_defaults(func=cmd_new)
 
     return p
